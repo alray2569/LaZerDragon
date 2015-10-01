@@ -16,11 +16,12 @@ CC= g++
 EXECUTABLE= bin/game
 BUILDDIR= build
 ENGINEDIR= dragonfly
+INCLUDEDIR= src
 SRCDIR= src
 
 LINK= -L/usr/local/Cellar/sfml/2.3/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio #-lrt
 INCLUDE= -I../$(ENGINEDIR)/include -I/usr/local/Cellar/sfml/2.3/include \
-    -I./include # path to dragonfly includes
+    -I./$(INCLUDEDIR) # path to dragonfly includes
 ENGINE= ../$(ENGINEDIR)/lib/libdragonfly-mac64.a # location of dragonfly engine
 GAMESRC= $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS= $(patsubst $(SRCDIR)/%,build/%,$(GAMESRC:.cpp=.o))

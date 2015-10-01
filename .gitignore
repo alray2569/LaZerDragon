@@ -1,5 +1,6 @@
 # Dragonfly files
 dragonfly/*
+dragonfly.log
 
 # SFML files
 SFML-2.3/*

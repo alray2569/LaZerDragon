@@ -12,6 +12,13 @@ SFML-2.3/*
 *.suo
 *.sdf
 *.opensdf
+*.tlog
+*.pdb
+*.vcxproj.user
+*.idb
+*.lastbuildstate]
+*.ilk
+LaZerDragon/*
 
 # Compiled Object files
 *.slo

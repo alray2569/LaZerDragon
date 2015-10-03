@@ -24,10 +24,10 @@ laser::Color::Color( void ) {
 }
 
 laser::Color::Color( bool red, bool green, bool blue ) {
-	this->color =
-		red ? RMASK : 0 +
-		green ? GMASK : 0 +
-		blue ? BMASK : 0;
+  this->color =
+    (red ? RMASK : 0) +
+    (green ? GMASK : 0) +
+    (blue ? BMASK : 0);
 }
 
 laser::Color::Color( enum df::Color dfcolor ) {

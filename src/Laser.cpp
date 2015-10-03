@@ -20,12 +20,12 @@ Laser::Laser() {
   setSolidness(df::SOFT);
 
   setColor( laser::Color(df::WHITE) );
-  setDirection(laser::RIGHT);
+  setDirection(RIGHT);
 
   registerInterest( df::OUT_EVENT );
 }
 
-Laser::Laser(laser::Color color, laser::Direction direction) {
+Laser::Laser(laser::Color color, Direction direction) {
   setType("Laser");
   setSolidness(df::SOFT);
 

@@ -13,7 +13,7 @@
 
 // Game includes
 #include "LaserColor.h"
-#include "LaserDirection.h"
+#include "Direction.h"
 
 
 #define VERT_LASER_CHAR '|'

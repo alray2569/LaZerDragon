@@ -1,4 +1,5 @@
 // LaZerDragon
+// char *args[]
 // Gareth Solbeck
 // IMGD 3000
 
@@ -55,25 +56,25 @@ void Laser::setColor(laser::Color color) {
   }
 }
 
-void Laser::setDirection(laser::Direction direction) {
+void Laser::setDirection(Direction direction) {
   this->direction = direction;
   switch (direction) {
-    case laser::RIGHT:
+    case RIGHT:
       draw_char = HORIZ_LASER_CHAR;
       setXVelocity(1);
       setYVelocity(0);
       break;
-    case laser::DOWN:
+    case DOWN:
       draw_char = VERT_LASER_CHAR;
       setXVelocity(0);
       setYVelocity(1);
       break;
-    case laser::LEFT:
+    case LEFT:
       draw_char = HORIZ_LASER_CHAR;
       setXVelocity(-1);
       setYVelocity(0);
       break;
-    case laser::UP:
+    case UP:
       draw_char = VERT_LASER_CHAR;
       setXVelocity(0);
       setYVelocity(-1);
@@ -84,6 +85,6 @@ void Laser::setDirection(laser::Direction direction) {
 laser::Color Laser::getColor() const {
   return color;
 }
-laser::Direction Laser::getDirection() const {
+Direction Laser::getDirection() const {
   return direction;
 }

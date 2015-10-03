@@ -1,4 +1,5 @@
 // LaZerDragon
+// char *args[]
 // Gareth Solbeck
 // IMGD 3000
 
@@ -22,19 +23,19 @@ class Laser : public df::Object {
  private:
   char draw_char;
   laser::Color color;
-  laser::Direction direction;
+  Direction direction;
 
  public:
   Laser( void );
-  Laser( laser::Color, laser::Direction );
+  Laser( laser::Color, Direction );
 
   void draw( void );
   virtual int eventHandler(const df::Event *evt);
 
   void setColor( laser::Color );
-  void setDirection( laser::Direction );
+  void setDirection( Direction );
   laser::Color getColor( void ) const;
-  laser::Direction getDirection( void ) const;
+  Direction getDirection( void ) const;
 };
 
 #endif

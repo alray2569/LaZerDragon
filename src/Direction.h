@@ -1,14 +1,13 @@
 // LaZerDragon
-// Andrew Ray
+// char *args[]
+// Gareth Solbeck
 // IMGD 3000
 
 // Laser direction
 
-#ifndef LASERDIRECTION_H
-#define LASERDIRECTION_H
+#ifndef DIRECTION_H
+#define DIRECTION_H
 
-
-namespace laser {
 
 enum Direction {
   RIGHT = 0,
@@ -19,7 +18,5 @@ enum Direction {
 
 // Rotates direction [dir] clockwise [turns] * 90 degrees
 Direction rotateDirection(Direction dir, int turns);
-
-} // end namespace laser
 
 #endif

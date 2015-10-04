@@ -17,14 +17,14 @@ class Component : public df::Object {
 private:
   Direction direction;
 
-  virtual void laserHit( const Laser* );
+  virtual void laserHit( Laser* );
 
 public:
   Component();
 
   virtual int eventHandler( const df::Event* );
 
-  Direction getDirection();
+  Direction getDirection() const;
   void setDirection( Direction );
 
 };

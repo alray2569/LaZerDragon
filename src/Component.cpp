@@ -25,10 +25,11 @@ int Component::eventHandler(const df::Event *evt) {
         static_cast<const df::EventCollision*>( evt );
 
     if (coll->getObject1()->getType() == "Laser") {
-      laserHit( static_cast< const Laser* >( coll->getObject1() ) );
+      laserHit( static_cast< Laser* >( coll->getObject1() ) );
     } else if (coll->getObject2()->getType() == "Laser") {
-      laserHit( static_cast< const Laser* >( coll->getObject2() ) );
+      laserHit( static_cast< Laser* >( coll->getObject2() ) );
     }
+
     return 1;
   }
 
@@ -36,7 +37,7 @@ int Component::eventHandler(const df::Event *evt) {
 }
 
 // To be overriden by subclasses
-void Component::laserHit( const Laser* ) {}
+void Component::laserHit( Laser* ) {}
 
 void Component::setDirection( Direction ) {
   this->direction = direction;
@@ -56,6 +57,6 @@ void Component::setDirection( Direction ) {
   }
 }
 
-Direction Component::getDirection() {
+Direction Component::getDirection() const {
   return direction;
 }

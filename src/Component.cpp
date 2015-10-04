@@ -39,7 +39,7 @@ int Component::eventHandler(const df::Event *evt) {
 // To be overriden by subclasses
 void Component::laserHit( Laser* ) {}
 
-void Component::setDirection( Direction ) {
+void Component::setDirection( Direction direction ) {
   this->direction = direction;
   switch(direction) {
     case RIGHT:

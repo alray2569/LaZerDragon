@@ -8,7 +8,7 @@ Mirror::Mirror( void ) /* on the wall */ {
 }
 
 /* private */ void Mirror::laserHit( Laser *laserptr ) {
-	
+	this->rotateLaser( laserptr );
 }
 
 /* private */ bool Mirror::checkDnRt( void ) const {

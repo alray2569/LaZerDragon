@@ -2,10 +2,14 @@
 #include "Component.h"
 #include "LaserColor.h"
 
+#define EMITTER "emitter"
+
 class Emitter: public Component {
 private:
 	laser::Color color;
 
+	// Do setup general to all constructors
+	void constructorHelper( laser::Color );
 	void laserHit( Laser* );
 
 public:
@@ -20,6 +24,6 @@ public:
 	void setColor( laser::Color );
 	void setColor( df::Color );
 
-	int eventHandler( df::Event* );
+	int eventHandler( const df::Event* );
 };
 

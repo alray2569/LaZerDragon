@@ -14,8 +14,6 @@ Component::Component() {
   setSpriteSlowdown(0);
 
   setDirection(RIGHT);
-
-  registerInterest(df::COLLISION_EVENT);
 }
 
 // Handle collision events and pass lasers to laserHit()

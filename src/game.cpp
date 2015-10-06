@@ -12,7 +12,7 @@
 
 // Game includes
 #include "Block.h"
-#include "Laser.h"
+#include "Emitter.h"
 #include "Mirror.h"
 
 #define DEBUG true
@@ -36,8 +36,8 @@ int main() {
 
   df::splash();
 
-  Laser *laser1 = new Laser( laser::Color(df::RED), RIGHT );
-  laser1->setPosition( df::Position(1, 10) );
+  Emitter *emitter1 = new Emitter( laser::Color(df::RED), RIGHT );
+  emitter1->setPosition( df::Position(4, 10) );
 
   Mirror *mirror1 = new Mirror();
   mirror1->setPosition( df::Position(60, 10) );

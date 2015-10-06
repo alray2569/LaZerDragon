@@ -1,42 +1,53 @@
 #include "Emitter.h"
+#include "ldutil.h"
+
 #include <EventStep.h>
+#include <LogManager.h>
+#include <ResourceManager.h>
 #include <WorldManager.h>
 
-void laserHit( Laser *laserptr ) {
+void Emitter::laserHit( Laser *laserptr ) {
 	df::WorldManager::getInstance( ).markForDelete( laserptr );
 }
 
 Emitter::Emitter( void ) {
-	this->color = laser::Color( );
-	this->registerInterest( df::STEP_EVENT );
+	this->constructorHelper( laser::Color( ) );
 }
 
 Emitter::Emitter( Direction dir ) {
-	this->color = laser::Color( );
 	this->setDirection( dir );
-	this->registerInterest( df::STEP_EVENT );
+	this->constructorHelper( laser::Color( ) );
 }
 
 Emitter::Emitter( laser::Color color ) {
-	this->color = color;
-	this->registerInterest( df::STEP_EVENT );
+	this->constructorHelper( color );
 }
 
 Emitter::Emitter( laser::Color color, Direction dir ) {
-	this->color = color;
 	this->setDirection( dir );
-	this->registerInterest( df::STEP_EVENT );
+	this->constructorHelper( color );
 }
 
 Emitter::Emitter( df::Color color ) {
-	this->color = laser::Color( color );
-	this->registerInterest( df::STEP_EVENT );
+	this->constructorHelper( laser::Color( color ) );
 }
 
 Emitter::Emitter( df::Color color, Direction dir ) {
-	this->color = laser::Color( color );
 	this->setDirection( dir );
-	this->registerInterest( df::STEP_EVENT );
+	this->constructorHelper( laser::Color( color ) );
+}
+
+void Emitter::constructorHelper( laser::Color color ) {
+  this->color = color;
+  this->registerInterest( df::STEP_EVENT );
+  this->setType(EMITTER);
+  df::Sprite *temp_sprite =
+    df::ResourceManager::getInstance().getSprite(EMITTER);
+  if (!temp_sprite) {
+    DF_LOG("Emitter::Emitter(): Warning! Sprite '%s' not found", EMITTER);
+  } else {
+    this->setSprite(temp_sprite);
+  }
 }
 
 laser::Color Emitter::getColor( void ) const {
@@ -51,7 +62,7 @@ void Emitter::setColor( df::Color ncolor ) {
 	this->color = laser::Color( ncolor );
 }
 
-int Emitter::eventHandler( df::Event *event ) {
+int Emitter::eventHandler( const df::Event *event ) {
 	if ( event->getType( ) == df::STEP_EVENT ) {
 		df::Position pos = this->getPosition( );
 		switch ( this->getDirection( ) ) {
@@ -70,8 +81,8 @@ int Emitter::eventHandler( df::Event *event ) {
 		default:
 			break;
 		}
-
-		new Laser( this->getColor( ), this->getDirection( ) )->setPosition( pos );
+		Laser* laser = new Laser( this->getColor( ), this->getDirection( ) );
+		laser->setPosition( pos );
 		return 1;
 	}
 	return Component::eventHandler( event );

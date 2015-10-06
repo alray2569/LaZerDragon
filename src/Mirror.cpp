@@ -4,7 +4,7 @@
 
 Mirror::Mirror( void ) /* on the wall */ {
 	this->setType( MIRROR );
-	this->setSprite( df::ResourceManager::getInstance( ).getSprite( MIRROR ), true );
+	this->setSprite( df::ResourceManager::getInstance( ).getSprite( MIRROR ), false );
 }
 
 /* private */ void Mirror::laserHit( Laser *laserptr ) {

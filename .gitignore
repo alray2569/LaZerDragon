@@ -20,6 +20,9 @@ SFML-2.3/*
 *.ilk
 LaZerDragon/*
 
+#batch files
+*.bat
+
 # Compiled Object files
 *.slo
 *.lo

@@ -59,4 +59,5 @@ void loadResources() {
   df::ResourceManager &resource_manager = df::ResourceManager::getInstance();
   resource_manager.loadSprite("sprites/block.spr", "block");
   resource_manager.loadSprite("sprites/mirror.spr", "mirror");
+  resource_manager.loadSprite( "sprites/emitter.spr", "emitter" );
 }

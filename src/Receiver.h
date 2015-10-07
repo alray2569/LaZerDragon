@@ -6,7 +6,6 @@
 class Receiver: public Component {
 private:
 	laser::Color color;
-	bool isActive;
 
 	void laserHit( Laser* );
 

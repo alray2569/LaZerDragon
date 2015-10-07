@@ -1,4 +1,5 @@
 #include "Receiver.h"
+#include "EventReceiverActive.h"
 #include <WorldManager.h>
 #include <EventStep.h>
 #include <ResourceManager.h>
@@ -19,12 +20,13 @@ Receiver::Receiver( df::Color color ) {
 
 void Receiver::laserHit( Laser *laserPtr ) {
 	df::WorldManager::getInstance( ).markForDelete( laserPtr );
-	this->isActive = true;
+
+	df::Event evt = EventReceiverActive( this );
+	df::WorldManager::getInstance( ).onEvent( &evt );
 }
 
 int Receiver::eventHandler( const df::Event *event ) {
 	if ( event->getType( ) == df::STEP_EVENT ) {
-		this->isActive = false;
 		return 1;
 	}
 	return Component::eventHandler( event );

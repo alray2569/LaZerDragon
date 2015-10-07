@@ -1,6 +1,7 @@
 #include "Level.h"
 #include <WorldManager.h>
 #include <EventStep.h>
+#include <Position.h>
 #include "EventReceiverActive.h"
 
 Level::Level( int levelnum ) {
@@ -17,7 +18,8 @@ int Level::addComponent( Component *comp ) {
 	df::ObjectListIterator oli( &this->components );
 
 	for ( oli.first( ); !oli.isDone( ); oli.next( ) ) {
-		if ( oli.currentObject( )->getPosition( ) == comp->getPosition( ) ) {
+		df::Position pos = comp->getPosition( );
+		if ( oli.currentObject( )->getPosition( ) == pos ) {
 			return -1;
 		}
 	}
@@ -54,5 +56,7 @@ int Level::eventHandler( const df::Event *evt ) {
 	}
 	else if ( evt->getType( ) == df::STEP_EVENT ) {
 		this->active = 0;
+		return 1;
 	}
+	return 0;
 }

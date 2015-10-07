@@ -10,6 +10,6 @@
 
 
 // Rotates direction [dir] clockwise [turns] * 90 degrees
-Direction rotateDirection(Direction dir, int turns) {
+Direction rotateDirection(Direction dir, unsigned int turns) {
   return static_cast<Direction>((dir + turns) % 4);
 }

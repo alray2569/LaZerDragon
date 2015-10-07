@@ -58,3 +58,11 @@ void Component::setDirection( Direction direction ) {
 Direction Component::getDirection() const {
   return direction;
 }
+
+void Component::rotate( bool ccw ) {
+  if (ccw) {
+    setDirection(rotateDirection(getDirection(), 3));
+  } else {
+    setDirection(rotateDirection(getDirection(), 1));
+  }
+}

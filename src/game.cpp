@@ -7,11 +7,13 @@
 
 // Engine includes
 #include "GameManager.h"
+#include "GraphicsManager.h"
 #include "LogManager.h"
 #include "ResourceManager.h"
 
 // Game includes
 #include "Block.h"
+#include "ComponentCount.h"
 #include "Emitter.h"
 #include "Mirror.h"
 
@@ -31,10 +33,14 @@ int main() {
     return 1; // Error
   }
   log_manager.setFlush(DEBUG);
+  df::GraphicsManager::getInstance().getWindow()->setMouseCursorVisible(true);
 
   loadResources();
 
   df::splash();
+
+  ComponentCount* mirror_count = new ComponentCount("mirror", 5);
+  mirror_count->setLocation(df::BOTTOM_CENTER);
 
   Emitter *emitter1 = new Emitter( laser::Color(df::RED), RIGHT );
   emitter1->setPosition( df::Position(4, 10) );

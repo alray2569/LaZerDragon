@@ -21,8 +21,6 @@ Laser::Laser() {
 
   setColor( laser::Color(df::WHITE) );
   setDirection(RIGHT);
-
-  registerInterest( df::OUT_EVENT );
 }
 
 Laser::Laser(laser::Color color, Direction direction) {
@@ -31,8 +29,6 @@ Laser::Laser(laser::Color color, Direction direction) {
 
   setDirection(direction);
   setColor(color);
-
-  registerInterest( df::OUT_EVENT );
 }
 
 void Laser::draw() {

@@ -26,7 +26,7 @@ public:
 
   Direction getDirection() const;
   void setDirection( Direction );
-
+  void rotate( bool ccw=false );
 };
 
 #endif

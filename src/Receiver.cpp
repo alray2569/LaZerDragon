@@ -19,10 +19,11 @@ Receiver::Receiver( df::Color color ) {
 }
 
 void Receiver::laserHit( Laser *laserPtr ) {
-	df::WorldManager::getInstance( ).markForDelete( laserPtr );
-
-	df::Event evt = EventReceiverActive( this );
-	df::WorldManager::getInstance( ).onEvent( &evt );
+  if (laserPtr->getColor() == this->color) {
+    df::Event evt = EventReceiverActive( this );
+    df::WorldManager::getInstance( ).onEvent( &evt );
+  }
+  df::WorldManager::getInstance( ).markForDelete( laserPtr );
 }
 
 int Receiver::eventHandler( const df::Event *event ) {

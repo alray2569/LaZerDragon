@@ -57,7 +57,7 @@ int Level::eventHandler( const df::Event *evt ) {
 	if ( evt->getType( ) == RECEIVER_ACTIVE_EVENT ) {
 		this->active++;
 
-		if ( this->active = this->receivers ) {
+		if ( this->active == this->receivers ) {
 			this->setLevelOver( );
 		}
 

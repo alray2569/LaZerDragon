@@ -15,6 +15,7 @@
 #include "Block.h"
 #include "ComponentCount.h"
 #include "Emitter.h"
+#include "Level.h"
 #include "Receiver.h"
 #include "ldutil.h"
 
@@ -40,16 +41,17 @@ int main() {
 
   df::splash();
 
-  ComponentCount* mirror_count = new ComponentCount("mirror", 5);
+  Level* level = new Level(1);
+  ComponentCount* mirror_count = new ComponentCount("mirror", 6);
   mirror_count->setLocation(df::BOTTOM_CENTER);
 
   std::string lvl_str = "BBBBBBBBBBBBBBBBBBBBBBBBBB"
                         "B     B                  B"
                         "E     B           B      B"
-                        "B     B    BBBBBBBB      B"
+                        "B     B    BBBBRBBB      B"
                         "B                 B      B"
-                        "B                 B      B"
-                        "BBBBBBBBBBBBBBBBBBBBBRBBBB";
+                        "e                 B      B"
+                        "BBBBBBBBBBBBBBBBBBBBBrBBBB";
   for (int y = 0; y < GRID_HEIGHT; y++) {
     for (int x = 0; x < GRID_WIDTH; x++) {
       char c = lvl_str[x + y * GRID_WIDTH];
@@ -61,13 +63,20 @@ int main() {
         case 'E':
           component = new Emitter( laser::Color(df::RED), RIGHT );
           break;
+        case 'e':
+          component = new Emitter( laser::Color(df::GREEN), RIGHT );
+          break;
         case 'R':
           component = new Receiver( laser::Color(df::RED) );
           break;
+        case 'r':
+          component = new Receiver( laser::Color(df::GREEN) );
+          break;
         default:
-          continue;
+          continue; //skip to the next iteration
       }
       component->setGridPosition( df::Position(x, y));
+      level->addComponent(component);
     }
   }
 

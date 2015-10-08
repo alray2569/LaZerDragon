@@ -15,7 +15,8 @@
 #include "Block.h"
 #include "ComponentCount.h"
 #include "Emitter.h"
-#include "Mirror.h"
+#include "Receiver.h"
+#include "ldutil.h"
 
 #define DEBUG true
 
@@ -42,18 +43,33 @@ int main() {
   ComponentCount* mirror_count = new ComponentCount("mirror", 5);
   mirror_count->setLocation(df::BOTTOM_CENTER);
 
-  Emitter *emitter1 = new Emitter( laser::Color(df::RED), RIGHT );
-  emitter1->setPosition( df::Position(4, 10) );
-
-  Mirror *mirror1 = new Mirror();
-  mirror1->setPosition( df::Position(60, 10) );
-  mirror1->setDirection( UP );
-
-  Mirror *mirror2 = new Mirror();
-  mirror2->setPosition( df::Position(60, 20) );
-
-  Block *block1 = new Block();
-  block1->setPosition( df::Position(30, 20) );
+  std::string lvl_str = "BBBBBBBBBBBBBBBBBBBBBBBBBB"
+                        "B     B                  B"
+                        "E     B           B      B"
+                        "B     B    BBBBBBBB      B"
+                        "B                 B      B"
+                        "B                 B      B"
+                        "BBBBBBBBBBBBBBBBBBBBBRBBBB";
+  for (int y = 0; y < GRID_HEIGHT; y++) {
+    for (int x = 0; x < GRID_WIDTH; x++) {
+      char c = lvl_str[x + y * GRID_WIDTH];
+      Component* component;
+      switch (c) {
+        case 'B':
+          component = new Block();
+          break;
+        case 'E':
+          component = new Emitter( laser::Color(df::RED), RIGHT );
+          break;
+        case 'R':
+          component = new Receiver( laser::Color(df::RED) );
+          break;
+        default:
+          continue;
+      }
+      component->setGridPosition( df::Position(x, y));
+    }
+  }
 
   game_manager.run();
 
@@ -66,4 +82,5 @@ void loadResources() {
   resource_manager.loadSprite("sprites/block.spr", "block");
   resource_manager.loadSprite("sprites/mirror.spr", "mirror");
   resource_manager.loadSprite( "sprites/emitter.spr", "emitter" );
+  resource_manager.loadSprite("sprites/receiver.spr", "receiver");
 }

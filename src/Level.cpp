@@ -2,6 +2,7 @@
 #include <WorldManager.h>
 #include <EventStep.h>
 #include <Position.h>
+#include <GameManager.h>
 #include "EventReceiverActive.h"
 
 Level::Level( int levelnum ) {
@@ -12,6 +13,7 @@ Level::Level( int levelnum ) {
 	this->active = 0;
 	this->registerInterest( df::STEP_EVENT );
 	this->registerInterest( RECEIVER_ACTIVE_EVENT );
+	this->isLevelOver = false;
 }
 
 int Level::addComponent( Component *comp ) {
@@ -46,12 +48,19 @@ void Level::setLevelOver( void ) {
 		df::WorldManager::getInstance( ).markForDelete( oli.currentObject( ) );
 	}
 
-	df::WorldManager::getInstance( ).markForDelete( this );
+	this->isLevelOver = true;
+
+	df::GameManager::getInstance( ).setGameOver( true );
 }
 
 int Level::eventHandler( const df::Event *evt ) {
 	if ( evt->getType( ) == RECEIVER_ACTIVE_EVENT ) {
 		this->active++;
+
+		if ( this->active = this->receivers ) {
+			this->setLevelOver( );
+		}
+
 		return 1;
 	}
 	else if ( evt->getType( ) == df::STEP_EVENT ) {
@@ -59,4 +68,8 @@ int Level::eventHandler( const df::Event *evt ) {
 		return 1;
 	}
 	return 0;
+}
+
+bool Level::getLevelOver( void ) const {
+	return this->isLevelOver;
 }

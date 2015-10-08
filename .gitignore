@@ -23,6 +23,12 @@ LaZerDragon/*
 #batch files
 *.bat
 
+# Archives
+*.zip
+*.7z
+*.tar
+*.tar.gz
+
 # Compiled Object files
 *.slo
 *.lo

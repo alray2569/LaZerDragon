@@ -11,6 +11,7 @@ private:
 	int levelnum;
 	int receivers;
 	int active;
+	bool isLevelOver;
 
 public:
 	Level( int levelnum );
@@ -23,6 +24,8 @@ public:
 	void setLevelOver( void );
 
 	int eventHandler( const df::Event* );
+
+	bool getLevelOver( void ) const;
 };
 
 #endif

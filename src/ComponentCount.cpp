@@ -35,11 +35,12 @@ int ComponentCount::eventHandler(const df::Event* evt) {
   if (evt->getType() == df::MOUSE_EVENT) {
     const df::EventMouse* mouse = static_cast< const df::EventMouse* > (evt);
     if (mouse->getMouseAction() == df::CLICKED) {
+      df::Position grid_pos = snapPosToGrid(mouse->getMousePosition());
       if (mouse->getMouseButton() == df::Mouse::LEFT) {
-        leftClick(mouse->getMousePosition());
+        leftClick(grid_pos);
         return 1;
       } else if (mouse->getMouseButton() == df::Mouse::RIGHT) {
-        rightClick(mouse->getMousePosition());
+        rightClick(grid_pos);
         return 1;
       }
     }

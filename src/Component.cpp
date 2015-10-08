@@ -6,9 +6,11 @@
 // Puzzle component (e.g: emitter, block, mirror)
 
 // Engine includes
-#include "Component.h"
-#include "EventCollision.h"
+#include <EventCollision.h>
 
+// Game includes
+#include "Component.h"
+#include "ldutil.h"
 
 Component::Component() {
   setSpriteSlowdown(0);
@@ -65,4 +67,12 @@ void Component::rotate( bool ccw ) {
   } else {
     setDirection(rotateDirection(getDirection(), 1));
   }
+}
+
+df::Position Component::getGridPosition() const {
+  return posToGrid(getPosition());
+}
+
+void Component::setGridPosition( df::Position pos ) {
+  setPosition(gridToPos(pos));
 }

@@ -27,6 +27,9 @@ public:
   Direction getDirection() const;
   void setDirection( Direction );
   void rotate( bool ccw=false );
+
+  df::Position getGridPosition() const;
+  void setGridPosition( df::Position );
 };
 
 #endif

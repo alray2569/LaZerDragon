@@ -16,6 +16,9 @@ private:
   // Returns true if component was placed successfully
   virtual bool placeComponent( df::Position );
 
+  void leftClick( df::Position );
+  void rightClick( df::Position );
+
   // Disallow default constructor
   ComponentCount();
 

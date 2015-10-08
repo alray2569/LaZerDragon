@@ -35,29 +35,11 @@ int ComponentCount::eventHandler(const df::Event* evt) {
   if (evt->getType() == df::MOUSE_EVENT) {
     const df::EventMouse* mouse = static_cast< const df::EventMouse* > (evt);
     if (mouse->getMouseAction() == df::CLICKED) {
-
-      // Left click
       if (mouse->getMouseButton() == df::Mouse::LEFT) {
-        df::ObjectList obj_list = df::WorldManager::getInstance()
-            .objectsAtPosition(mouse->getMousePosition());
-        if (obj_list.isEmpty()) {
-          // If there are components still available
-          if (getValue() && placeComponent(mouse->getMousePosition())) {
-            setValue(getValue() - 1);
-          }
-        } else {
-          df::ObjectListIterator iter(&obj_list);
-          for (iter.first(); !iter.isDone(); iter.next()) {
-            DF_LOG("Trying to rotate item: %x", iter.currentObject());
-            Component* comp = dynamic_cast<Component*>(iter.currentObject());
-            if (comp) {
-              comp->rotate();
-            }
-          }
-        }
+        leftClick(mouse->getMousePosition());
         return 1;
-      // Right click
       } else if (mouse->getMouseButton() == df::Mouse::RIGHT) {
+        rightClick(mouse->getMousePosition());
         return 1;
       }
     }
@@ -65,8 +47,50 @@ int ComponentCount::eventHandler(const df::Event* evt) {
   return ViewObject::eventHandler(evt);
 }
 
+void ComponentCount::leftClick(df::Position pos) {
+  df::ObjectList obj_list = df::WorldManager::getInstance()
+      .objectsAtPosition(pos);
+  bool occupied = false;
+  df::ObjectListIterator iter(&obj_list);
+
+  for (iter.first(); !iter.isDone(); iter.next()) {
+    Component* comp = dynamic_cast<Component*>(iter.currentObject());
+    // If the object is a component, the space is occupied
+    if (comp) {
+      occupied = true;
+      // If the component is of this type, rotate it
+      if (comp->getType() == getComponentType()) {
+        comp->rotate();
+      }
+    }
+  }
+  // If the position is not occupied and there are components left
+  if (!occupied && getValue()) {
+    // Try to place a component
+    if (placeComponent(pos)) {
+      // If successful, decrement the number of components left
+      setValue(getValue() - 1);
+    }
+  }
+}
+
+void ComponentCount::rightClick(df::Position pos) {
+  df::WorldManager& world_manager = df::WorldManager::getInstance();
+  df::ObjectList obj_list = df::WorldManager::getInstance()
+      .objectsAtPosition(pos);
+  df::ObjectListIterator iter(&obj_list);
+
+  for (iter.first(); !iter.isDone(); iter.next()) {
+    Component* comp = dynamic_cast<Component*>(iter.currentObject());
+    // If the object is a component of this type, delete it and increment
+    if (comp && comp->getType() == getComponentType()) {
+      world_manager.markForDelete(comp);
+      setValue(getValue() + 1);
+    }
+  }
+}
+
 // Returns true if component was placed successfully
-// (To be overridden in subclasses)
 bool ComponentCount::placeComponent(df::Position pos) {
   std::string component_type = getComponentType();
   Component* component;
@@ -78,4 +102,4 @@ bool ComponentCount::placeComponent(df::Position pos) {
   }
   component->setPosition(pos);
   return true;
-};
+}

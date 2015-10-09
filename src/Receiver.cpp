@@ -9,14 +9,16 @@ Receiver::Receiver( laser::Color color /* = laser::WHITE */ ) {
 	this->color = color;
 	this->registerInterest( df::STEP_EVENT );
 	this->setType( "Receiver" );
-	this->setSprite( df::ResourceManager::getInstance( ).getSprite( "receiver" ) );
+	this->setSprite( df::ResourceManager::getInstance( ).getSprite( "receiver" ),
+			false);
 }
 
 Receiver::Receiver( df::Color color ) {
 	this->color = laser::Color( color );
 	this->registerInterest( df::STEP_EVENT );
 	this->setType( "Receiver" );
-	this->setSprite( df::ResourceManager::getInstance( ).getSprite( "receiver" ) );
+	this->setSprite( df::ResourceManager::getInstance( ).getSprite( "receiver" ),
+			false);
 }
 
 void Receiver::laserHit( Laser *laserPtr ) {

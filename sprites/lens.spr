@@ -1,0 +1,21 @@
+frames 4
+width 3
+height 3
+color white
+ V 
+>O>
+ ^ 
+end
+ V 
+>O<
+ V 
+end
+ V 
+<O<
+ ^ 
+end
+ ^ 
+>O<
+ ^ 
+end
+eof

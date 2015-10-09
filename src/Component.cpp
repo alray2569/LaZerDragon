@@ -13,7 +13,9 @@
 #include "ldutil.h"
 
 Component::Component() {
+  setAltitude(3);
   setSpriteSlowdown(0);
+  setTransparency(' ');
 
   setDirection(RIGHT);
 }

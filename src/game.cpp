@@ -17,6 +17,7 @@
 #include "Emitter.h"
 #include "Lens.h"
 #include "Level.h"
+#include "Prism.h"
 #include "Receiver.h"
 #include "ldutil.h"
 
@@ -99,4 +100,5 @@ void loadResources() {
   resource_manager.loadSprite( "sprites/emitter.spr", "emitter" );
   resource_manager.loadSprite("sprites/receiver.spr", "receiver");
   resource_manager.loadSprite("sprites/lens.spr", "lens");
+  resource_manager.loadSprite("sprites/prism.spr", "prism");
 }

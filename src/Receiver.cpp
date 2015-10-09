@@ -2,6 +2,7 @@
 #include "EventReceiverActive.h"
 #include <WorldManager.h>
 #include <EventStep.h>
+#include <GraphicsManager.h>
 #include <ResourceManager.h>
 
 Receiver::Receiver( laser::Color color /* = laser::WHITE */ ) {
@@ -31,4 +32,10 @@ int Receiver::eventHandler( const df::Event *event ) {
 		return 1;
 	}
 	return Component::eventHandler( event );
+}
+
+void Receiver::draw( void ) {
+  Object::draw();
+  df::GraphicsManager::getInstance().drawCh(getPosition(), 'O',
+      this->color.getColor());
 }

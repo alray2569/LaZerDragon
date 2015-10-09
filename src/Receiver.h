@@ -14,6 +14,7 @@ public:
 	Receiver( df::Color );
 
 	int eventHandler( const df::Event* );
+  virtual void draw( void );
 };
 
 #endif

@@ -2,20 +2,20 @@ frames 4
 width 3
 height 3
 color white
-#\ 
-##>
-#/ 
+-\ 
+-O>
+-/ 
 end
-###
-\#/
+|||
+\O/
  V 
 end
- /#
-<##
- \#
+ /-
+<O-
+ \-
 end
  ^ 
-/#\
-###
+/O\
+|||
 end
 eof

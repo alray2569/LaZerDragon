@@ -25,5 +25,6 @@ public:
 	void setColor( df::Color );
 
 	int eventHandler( const df::Event* );
+  virtual void draw( void );
 };
 

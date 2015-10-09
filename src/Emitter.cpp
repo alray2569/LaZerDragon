@@ -2,6 +2,7 @@
 #include "ldutil.h"
 
 #include <EventStep.h>
+#include <GraphicsManager.h>
 #include <LogManager.h>
 #include <ResourceManager.h>
 #include <WorldManager.h>
@@ -86,4 +87,10 @@ int Emitter::eventHandler( const df::Event *event ) {
 		return 1;
 	}
 	return Component::eventHandler( event );
+}
+
+void Emitter::draw( void ) {
+  Object::draw();
+  df::GraphicsManager::getInstance().drawCh(getPosition(), 'O',
+      this->color.getColor());
 }

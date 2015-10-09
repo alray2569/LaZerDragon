@@ -6,6 +6,7 @@
 // Utilities and Constants
 
 #include "ldutil.h"
+#include <algorithm>
 
 // Convert grid position to world position
 df::Position gridToPos( df::Position pos ) {

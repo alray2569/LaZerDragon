@@ -50,8 +50,8 @@ w	Receiver, Yellow DOWN
 x	Receiver, Yellow LEFT
 y	Receiver, Yellow RIGHT
 z	Receiver, White UP
-#	Emitter, White DOWN
-$	Emitter, White LEFT
-%	Emitter, White RIGHT
-=	Receiver, White LEFT
-.	Receiver, White RIGHT
+.	Emitter, White DOWN
+[	Emitter, White LEFT
+]	Emitter, White RIGHT
+<	Receiver, White LEFT
+>	Receiver, White RIGHT

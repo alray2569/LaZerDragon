@@ -112,6 +112,8 @@ Component *getComponent( char c ) {
 		return new Emitter( laser::WHITE, Direction::LEFT );
 	case 'y':
 		return new Emitter( laser::WHITE, Direction::RIGHT );
+	case ' ':
+		return NULL;
 	default:
 		DF_LOG( "Warning from ldutil::getComponent(): %c is not a valid character!", c );
 		return NULL;

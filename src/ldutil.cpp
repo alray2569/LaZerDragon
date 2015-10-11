@@ -116,3 +116,4 @@ Component *getComponent( char c ) {
 		DF_LOG( "Warning from ldutil::getComponent(): %c is not a valid character!", c );
 		return NULL;
 	}
+}

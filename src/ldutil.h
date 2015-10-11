@@ -20,6 +20,7 @@
 
 
 #define DF_LOG df::LogManager::getInstance( ).writeLog
+#include "Component.h"
 
 // Convert grid position to world position
 df::Position gridToPos( df::Position );
@@ -28,5 +29,7 @@ df::Position posToGrid( df::Position );
 
 // Return the position at the center of the grid square
 df::Position snapPosToGrid( df::Position );
+
+Component *getComponent( char );
 
 #endif

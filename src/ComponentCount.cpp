@@ -11,18 +11,23 @@
 
 // Game includes
 #include "ComponentCount.h"
+#include "Lens.h"
 #include "Mirror.h"
+#include "Prism.h"
 #include "ldutil.h"
 
 
 ComponentCount::ComponentCount(std::string type, int initial_count) {
+  setType("ComponentCount");
   setComponentType(type);
+  setSelected(false);
+  updateFrameBox();
 
   setValue(initial_count);
   registerInterest(df::MOUSE_EVENT);
 }
 
-std::string ComponentCount::getComponentType() {
+std::string ComponentCount::getComponentType() const {
   return getViewString();
 }
 
@@ -31,16 +36,29 @@ void ComponentCount::setComponentType( std::string type ) {
   setViewString(type);
 }
 
+bool ComponentCount::getSelected() const {
+  return selected;
+}
+
+void ComponentCount::setSelected( bool selected /* = true */ ) {
+  this->selected = selected;
+  if (selected) {
+    setColor(df::YELLOW);
+  } else {
+    setColor(df::WHITE);
+  }
+}
+
 int ComponentCount::eventHandler(const df::Event* evt) {
   if (evt->getType() == df::MOUSE_EVENT) {
     const df::EventMouse* mouse = static_cast< const df::EventMouse* > (evt);
     if (mouse->getMouseAction() == df::CLICKED) {
-      df::Position grid_pos = snapPosToGrid(mouse->getMousePosition());
+      df::Position pos = mouse->getMousePosition();
       if (mouse->getMouseButton() == df::Mouse::LEFT) {
-        leftClick(grid_pos);
+        leftClick(pos);
         return 1;
       } else if (mouse->getMouseButton() == df::Mouse::RIGHT) {
-        rightClick(grid_pos);
+        rightClick(pos);
         return 1;
       }
     }
@@ -49,8 +67,27 @@ int ComponentCount::eventHandler(const df::Event* evt) {
 }
 
 void ComponentCount::leftClick(df::Position pos) {
+  if (boxContainsPosition(updateFrameBox(), pos)) {
+    // Get all objects at altitude 4 (should be mostly view objects)
+    df::ObjectList viewObjects = df::WorldManager::getInstance().getSceneGraph()
+        .visibleObjects(4);
+    df::ObjectListIterator iter(&viewObjects);
+    for (iter.first(); !iter.isDone(); iter.next()) {
+      df::Object* temp_obj = iter.currentObject();
+      DF_LOG("%s", temp_obj->getType().c_str());
+      if (temp_obj->getType() == "ComponentCount") {
+        static_cast<ComponentCount *>(temp_obj)->setSelected(false);
+      }
+    }
+    setSelected(true);
+    return; // Prevent typical left click actions
+  }
+
+  // If left click was not on ViewObject, try to rotate or place a component
+  df::Position grid_pos = snapPosToGrid(pos);
+
   df::ObjectList obj_list = df::WorldManager::getInstance()
-      .objectsAtPosition(pos);
+      .objectsAtPosition(grid_pos);
   bool occupied = false;
   df::ObjectListIterator iter(&obj_list);
 
@@ -65,10 +102,11 @@ void ComponentCount::leftClick(df::Position pos) {
       }
     }
   }
-  // If the position is not occupied and there are components left
-  if (!occupied && getValue()) {
+  // If the position is not occupied and this ComponentCount is selected and
+  //  there are components left
+  if (!occupied && getSelected() && getValue()) {
     // Try to place a component
-    if (placeComponent(pos)) {
+    if (placeComponent(grid_pos)) {
       // If successful, decrement the number of components left
       setValue(getValue() - 1);
     }
@@ -76,9 +114,11 @@ void ComponentCount::leftClick(df::Position pos) {
 }
 
 void ComponentCount::rightClick(df::Position pos) {
+  df::Position grid_pos = snapPosToGrid(pos);
+
   df::WorldManager& world_manager = df::WorldManager::getInstance();
   df::ObjectList obj_list = df::WorldManager::getInstance()
-      .objectsAtPosition(pos);
+      .objectsAtPosition(grid_pos);
   df::ObjectListIterator iter(&obj_list);
 
   for (iter.first(); !iter.isDone(); iter.next()) {
@@ -97,10 +137,31 @@ bool ComponentCount::placeComponent(df::Position pos) {
   Component* component;
   if (component_type == "mirror") {
     component = new Mirror();
+  } else if (component_type == "lens") {
+    component = new Lens();
+  } else if (component_type == "prism") {
+    component = new Prism();
   } else {
     DF_LOG("ComponentCount::placeComponent(): Invalid component type");
     return false;
   }
   component->setPosition(pos);
   return true;
+}
+
+df::Box ComponentCount::updateFrameBox() {
+  if (isModified(df::BORDER)) {
+    frameBox.setVertical( getBorder() ? 3 : 1 );
+  }
+  if (isModified(df::VIEW_STRING)) {
+    frameBox.setHorizontal( getViewString().size() + 6 );
+  }
+  if (isModified(df::LOCATION)) {
+    df::Position temp_pos = getPosition();
+    temp_pos.setX(temp_pos.getX() - frameBox.getHorizontal() / 2);
+    temp_pos.setY(temp_pos.getY() - frameBox.getVertical() / 2);
+    frameBox.setCorner(temp_pos);
+  }
+  serialize(); // Reset modified flags
+  return frameBox;
 }

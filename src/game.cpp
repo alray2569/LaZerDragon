@@ -45,15 +45,17 @@ int main() {
 
   Level* level = new Level(1);
   ComponentCount* mirror_count = new ComponentCount("mirror", 6);
-  ComponentCount* lens_count = new ComponentCount("lens", 0);
+  ComponentCount* lens_count = new ComponentCount("lens", 1);
+  ComponentCount* prism_count = new ComponentCount("prism", 1);
   mirror_count->setLocation(df::BOTTOM_LEFT);
   lens_count->setLocation(df::BOTTOM_CENTER);
+  prism_count->setLocation(df::BOTTOM_RIGHT);
 
   std::string lvl_str = "BBBBBBBBBBBBBBBBBBBBBBBBBB"
                         "B     B                  B"
                         "E     B           B      B"
                         "B     B    BBBBRBBB      B"
-                        "B        L        B      B"
+                        "B                 B      B"
                         "e                 B      B"
                         "BBBBBBBBBBBBBBBBBBBBBrBBBB";
   for (int y = 0; y < GRID_HEIGHT; y++) {
@@ -75,9 +77,6 @@ int main() {
           break;
         case 'r':
           component = new Receiver( laser::Color(df::GREEN) );
-          break;
-        case 'L':
-          component = new Lens( UP );
           break;
         default:
           continue; //skip to the next iteration

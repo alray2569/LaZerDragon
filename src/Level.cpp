@@ -4,6 +4,7 @@
 #include <Position.h>
 #include <GameManager.h>
 #include "EventReceiverActive.h"
+#include "ldutil.h"
 
 Level::Level( int levelnum ) {
 	this->levelnum = levelnum;
@@ -14,6 +15,7 @@ Level::Level( int levelnum ) {
 	this->registerInterest( df::STEP_EVENT );
 	this->registerInterest( RECEIVER_ACTIVE_EVENT );
 	this->isLevelOver = false;
+	setLevelString("");
 }
 
 int Level::addComponent( Component *comp ) {
@@ -72,4 +74,24 @@ int Level::eventHandler( const df::Event *evt ) {
 
 bool Level::getLevelOver( void ) const {
 	return this->isLevelOver;
+}
+
+void Level::setLevelString( std::string level_string ) {
+  this->level_string = level_string;
+}
+std::string Level::getLevelString( void ) const {
+  return this->level_string;
+}
+
+void Level::start() {
+  for (int y = 0; y < GRID_HEIGHT; y++) {
+    for (int x = 0; x < GRID_WIDTH; x++) {
+      char c = level_string[x + y * GRID_WIDTH];
+      Component* component = getComponent(c);
+      if (component) {
+        component->setGridPosition( df::Position(x, y));
+        this->addComponent(component);
+      }
+    }
+  }
 }

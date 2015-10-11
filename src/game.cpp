@@ -17,6 +17,7 @@
 #include "Emitter.h"
 #include "Lens.h"
 #include "Level.h"
+#include "LevelManager.h"
 #include "Prism.h"
 #include "Receiver.h"
 #include "ldutil.h"
@@ -30,12 +31,15 @@ void loadResources( void );
 int main() {
   df::GameManager &game_manager = df::GameManager::getInstance();
   df::LogManager &log_manager = df::LogManager::getInstance();
+  LevelManager &level_manager = LevelManager::getInstance();
 
   if (game_manager.startUp()) {
     log_manager.writeLog("Error starting game manager!");
     game_manager.shutDown();
     return 1; // Error
   }
+  level_manager.startUp();
+
   log_manager.setFlush(DEBUG);
   df::GraphicsManager::getInstance().getWindow()->setMouseCursorVisible(true);
 
@@ -43,7 +47,6 @@ int main() {
 
   df::splash();
 
-  Level* level = new Level(1);
   ComponentCount* mirror_count = new ComponentCount("mirror", 6);
   ComponentCount* lens_count = new ComponentCount("lens", 1);
   ComponentCount* prism_count = new ComponentCount("prism", 1);
@@ -51,43 +54,16 @@ int main() {
   lens_count->setLocation(df::BOTTOM_CENTER);
   prism_count->setLocation(df::BOTTOM_RIGHT);
 
-  std::string lvl_str = "BBBBBBBBBBBBBBBBBBBBBBBBBB"
-                        "B     B                  B"
-                        "E     B           B      B"
-                        "B     B    BBBBRBBB      B"
-                        "B                 B      B"
-                        "e                 B      B"
-                        "BBBBBBBBBBBBBBBBBBBBBrBBBB";
-  for (int y = 0; y < GRID_HEIGHT; y++) {
-    for (int x = 0; x < GRID_WIDTH; x++) {
-      char c = lvl_str[x + y * GRID_WIDTH];
-      Component* component;
-      switch (c) {
-        case 'B':
-          component = new Block();
-          break;
-        case 'E':
-          component = new Emitter( laser::Color(df::RED), RIGHT );
-          break;
-        case 'e':
-          component = new Emitter( laser::Color(df::GREEN), RIGHT );
-          break;
-        case 'R':
-          component = new Receiver( laser::Color(df::RED) );
-          break;
-        case 'r':
-          component = new Receiver( laser::Color(df::GREEN) );
-          break;
-        default:
-          continue; //skip to the next iteration
-      }
-      component->setGridPosition( df::Position(x, y));
-      level->addComponent(component);
-    }
+  if (level_manager.loadLevel("levels/level1.lvl", 1)) {
+    level_manager.shutDown();
+    game_manager.shutDown();
+    return 1;
   }
+  level_manager.getLevel(1)->start();
 
   game_manager.run();
 
+  level_manager.shutDown();
   game_manager.shutDown();
   return 0;
 }

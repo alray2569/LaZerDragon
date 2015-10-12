@@ -20,6 +20,8 @@ int TitleScreen::eventHandler( const df::Event *evt ) {
 		const df::EventMouse *mevt = static_cast <const df::EventMouse*> ( evt );
 		if ( mevt->getMouseAction( ) == df::CLICKED ) {
 			if ( mevt->getMouseButton( ) == df::Mouse::LEFT ) {
+				// Here we can finish setting up the level.
+				// Initialize the counters.
 				ComponentCount* mirror_count = new ComponentCount( "mirror", 0 );
 				ComponentCount* lens_count = new ComponentCount( "lens", 0 );
 				ComponentCount* prism_count = new ComponentCount( "prism", 0 );
@@ -27,7 +29,11 @@ int TitleScreen::eventHandler( const df::Event *evt ) {
 				lens_count->setLocation( df::BOTTOM_CENTER );
 				prism_count->setLocation( df::BOTTOM_RIGHT );
 				mirror_count->setSelected( );
+
+				// Start the first level
 				LevelManager::getInstance( ).startLevel( 0 );
+
+				// Delete this object
 				df::WorldManager::getInstance( ).markForDelete( this );
 				return 1;
 			}

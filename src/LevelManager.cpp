@@ -28,7 +28,7 @@ int LevelManager::startUp() {
 void LevelManager::shutDown() {
   for (int i = 0; i < MAX_LEVEL; i++) {
     if (level_arr[i]) {
-      delete level_arr[i];
+      df::WorldManager::getInstance().markForDelete(level_arr[i]);
     }
   }
   Manager::shutDown();

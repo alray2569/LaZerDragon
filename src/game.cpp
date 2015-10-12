@@ -45,7 +45,10 @@ int main() {
 
   loadResources();
 
-  df::splash();
+  if (!DEBUG) {
+    df::splash();
+  }
+
 
   ComponentCount* mirror_count = new ComponentCount("mirror", 6);
   ComponentCount* lens_count = new ComponentCount("lens", 1);

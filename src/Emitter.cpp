@@ -16,8 +16,8 @@ Emitter::Emitter( void ) {
 }
 
 Emitter::Emitter( Direction dir ) {
-	this->setDirection( dir );
 	this->constructorHelper( laser::Color( ) );
+	this->setDirection( dir );
 }
 
 Emitter::Emitter( laser::Color color ) {
@@ -25,8 +25,8 @@ Emitter::Emitter( laser::Color color ) {
 }
 
 Emitter::Emitter( laser::Color color, Direction dir ) {
-	this->setDirection( dir );
 	this->constructorHelper( color );
+	this->setDirection( dir );
 }
 
 Emitter::Emitter( df::Color color ) {
@@ -34,8 +34,8 @@ Emitter::Emitter( df::Color color ) {
 }
 
 Emitter::Emitter( df::Color color, Direction dir ) {
-	this->setDirection( dir );
 	this->constructorHelper( laser::Color( color ) );
+	this->setDirection( dir );
 }
 
 void Emitter::constructorHelper( laser::Color color ) {
@@ -68,10 +68,10 @@ int Emitter::eventHandler( const df::Event *event ) {
 		df::Position pos = this->getPosition( );
 		switch ( this->getDirection( ) ) {
 		case UP:
-			pos.setY( pos.getY( ) + 1 );
+			pos.setY( pos.getY( ) - 1 );
 			break;
 		case DOWN:
-			pos.setY( pos.getY( ) - 1 );
+			pos.setY( pos.getY( ) + 1 );
 			break;
 		case LEFT:
 			pos.setX( pos.getX( ) - 1 );

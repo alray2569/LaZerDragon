@@ -76,13 +76,25 @@ int main() {
 int loadResources() {
   df::ResourceManager &resource_manager = df::ResourceManager::getInstance();
   LevelManager &level_manager = LevelManager::getInstance();
-
+  resource_manager.loadSprite( "sprites/title.spr", "titlescreen" );
   resource_manager.loadSprite("sprites/block.spr", "block");
   resource_manager.loadSprite("sprites/mirror.spr", "mirror");
   resource_manager.loadSprite( "sprites/emitter.spr", "emitter" );
   resource_manager.loadSprite("sprites/receiver.spr", "receiver");
   resource_manager.loadSprite("sprites/lens.spr", "lens");
   resource_manager.loadSprite("sprites/prism.spr", "prism");
+
+  resource_manager.loadSound( "sounds/blue.ogg", "blue");
+  resource_manager.loadSound( "sounds/click.ogg", "click");
+  resource_manager.loadSound( "sounds/cyan.ogg", "cyan");
+  resource_manager.loadMusic( "sounds/disaffected_piano.ogg", "music");
+  resource_manager.loadSound( "sounds/green.ogg", "green");
+  resource_manager.loadSound( "sounds/magenta.ogg", "magenta");
+  resource_manager.loadSound( "sounds/red.ogg", "red");
+  resource_manager.loadSound( "sounds/white.ogg", "white");
+  resource_manager.loadSound( "sounds/woosh.ogg", "woosh");
+  resource_manager.loadSound( "sounds/yellow.ogg", "yellow");
+
   for (int i = 0; i < NUM_LEVELS; i++) {
     std::ostringstream oss;
     oss << "levels/level" << i << ".lvl";

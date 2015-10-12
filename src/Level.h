@@ -22,6 +22,7 @@ public:
 	Level( int levelnum );
 
 	int addComponent( Component* );
+	int removeComponent( Component* );
 	df::ObjectList getComponents( void ) const;
 
 	int getLevelNum( void ) const;

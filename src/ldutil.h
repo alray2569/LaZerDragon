@@ -18,6 +18,7 @@
 #define MARGIN_TOP 0
 #define MARGIN_BOTTOM 3
 
+#define NUM_LEVELS 8
 
 #define DF_LOG df::LogManager::getInstance( ).writeLog
 #include "Component.h"

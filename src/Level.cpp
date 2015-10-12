@@ -7,6 +7,7 @@
 #include <GraphicsManager.h>
 #include "EventReceiverActive.h"
 #include "ldutil.h"
+#include "LevelManager.h"
 
 Level::Level( int levelnum ) {
 	this->levelnum = levelnum;
@@ -18,6 +19,7 @@ Level::Level( int levelnum ) {
 	this->registerInterest( df::STEP_EVENT );
 	this->registerInterest( RECEIVER_ACTIVE_EVENT );
 	this->isLevelOver = false;
+	this->setActive( false );
 	setLevelString("");
 	setTitle("");
 	setCount("mirror", 0);
@@ -42,6 +44,10 @@ int Level::addComponent( Component *comp ) {
 	return this->components.insert( comp );
 }
 
+int Level::removeComponent( Component *comp ) {
+	return this->components.remove( comp );
+}
+
 df::ObjectList Level::getComponents( void ) const {
 	return df::ObjectList( this->components );
 }
@@ -51,15 +57,27 @@ int Level::getLevelNum( void ) const {
 }
 
 void Level::setLevelOver( void ) {
-	df::ObjectListIterator oli( &this->components );
+	df::WorldManager &world_manager = df::WorldManager::getInstance();
 
+	// Remove components
+	df::ObjectListIterator oli( &this->components );
 	for ( oli.first( ); !oli.isDone( ); oli.next( ) ) {
-		df::WorldManager::getInstance( ).markForDelete( oli.currentObject( ) );
+		world_manager.markForDelete( oli.currentObject( ) );
+	}
+
+	// Remove lasers
+	df::ObjectList lasers = world_manager.getSceneGraph().visibleObjects(2);
+	df::ObjectListIterator laser_iter( &lasers );
+	for ( laser_iter.first(); !laser_iter.isDone(); laser_iter.next() ) {
+		world_manager.markForDelete( laser_iter.currentObject() );
 	}
 
 	this->isLevelOver = true;
+	this->setActive( false );
 
-	df::GameManager::getInstance( ).setGameOver( true );
+	if (LevelManager::getInstance( ).startLevel( -1 )) {
+		df::GameManager::getInstance( ).setGameOver();
+	}
 }
 
 int Level::eventHandler( const df::Event *evt ) {
@@ -108,6 +126,8 @@ void Level::start() {
   world_manager.onEvent(&lensEvt);
   df::EventView prismEvt("prism", counts["prism"], false);
   world_manager.onEvent(&prismEvt);
+
+  this->setActive( true );
 }
 
 void Level::setTitle( std::string title ) {

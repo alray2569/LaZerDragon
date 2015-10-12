@@ -12,6 +12,7 @@
 // Game includes
 #include "ComponentCount.h"
 #include "Lens.h"
+#include "LevelManager.h"
 #include "Mirror.h"
 #include "Prism.h"
 #include "ldutil.h"
@@ -125,6 +126,7 @@ void ComponentCount::rightClick(df::Position pos) {
     Component* comp = dynamic_cast<Component*>(iter.currentObject());
     // If the object is a component of this type, delete it and increment
     if (comp && comp->getType() == getComponentType()) {
+      LevelManager::getInstance().getActiveLevel()->removeComponent(comp);
       world_manager.markForDelete(comp);
       setValue(getValue() + 1);
     }
@@ -146,6 +148,7 @@ bool ComponentCount::placeComponent(df::Position pos) {
     return false;
   }
   component->setPosition(pos);
+  LevelManager::getInstance().getActiveLevel()->addComponent(component);
   return true;
 }
 

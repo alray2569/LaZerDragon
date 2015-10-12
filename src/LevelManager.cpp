@@ -14,6 +14,7 @@
 
 LevelManager::LevelManager() {
   setType("LevelManager");
+  active_level = 0;
 }
 
 LevelManager& LevelManager::getInstance() {
@@ -110,6 +111,21 @@ int LevelManager::unloadLevel(int level_num) {
   return 0;
 }
 
-Level* LevelManager::getLevel(int level_num) const {
-  return level_arr[level_num];
+// Start a level. If level_num is -1, start (active_level + 1)
+int LevelManager::startLevel( int level_num ) {
+  if (level_num == -1) {
+    active_level++;
+  } else {
+    active_level = level_num;
+  }
+  if (level_arr[active_level]) {
+    level_arr[active_level]->start();
+    return 0;
+  } else {
+    return -1;
+  }
+}
+
+Level* LevelManager::getActiveLevel() const {
+  return level_arr[active_level];
 }

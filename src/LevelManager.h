@@ -21,6 +21,7 @@ private:
   void operator=( LevelManager const& );  // No assignment
 
   Level* level_arr[MAX_LEVEL];
+  int active_level;
 
 public:
   static LevelManager& getInstance( void );
@@ -30,7 +31,9 @@ public:
 
   int loadLevel( std::string filename, int level_num );
   int unloadLevel( int level_num );
-  Level* getLevel( int level_num ) const;
+  // Start a level. If level_num is -1, start (active_level + 1)
+  int startLevel( int level_num );
+  Level* getActiveLevel() const;
 };
 
 #endif

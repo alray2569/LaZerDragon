@@ -18,6 +18,7 @@
 Laser::Laser() {
   setType("Laser");
   setSolidness(df::SOFT);
+  setAltitude(2);
 
   setColor( laser::Color(df::WHITE) );
   setDirection(RIGHT);

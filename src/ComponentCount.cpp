@@ -75,7 +75,6 @@ void ComponentCount::leftClick(df::Position pos) {
     df::ObjectListIterator iter(&viewObjects);
     for (iter.first(); !iter.isDone(); iter.next()) {
       df::Object* temp_obj = iter.currentObject();
-      DF_LOG("%s", temp_obj->getType().c_str());
       if (temp_obj->getType() == "ComponentCount") {
         static_cast<ComponentCount *>(temp_obj)->setSelected(false);
       }

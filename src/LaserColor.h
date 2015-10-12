@@ -35,6 +35,7 @@ class Color {
 
    void setColor( enum df::Color );
    enum df::Color getColor( void ) const;
+   std::string getColorName( void ) const;
 
    laser::Color operator+( const laser::Color& ) const;
    laser::Color operator-( const laser::Color& ) const;

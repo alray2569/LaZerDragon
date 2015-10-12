@@ -5,6 +5,8 @@
 
 // Color for lasers. Allows color combination
 
+#include <string>
+
 // Game includes
 #include "LaserColor.h"
 #include "ldutil.h"
@@ -152,4 +154,17 @@ enum df::Color laser::Color::getColor( void ) const {
 	if ( *this == laser::WHITE ) return df::Color::WHITE;
 	DF_LOG( "laser::Color::getColor(): A problem has occurred. This laser's color does not correspond to a df::Color." );
 	return df::COLOR_DEFAULT;
+}
+
+std::string laser::Color::getColorName( void ) const {
+	if ( *this == laser::BLACK ) return "black";
+	if ( *this == laser::RED ) return "red";
+	if ( *this == laser::YELLOW ) return "yellow";
+	if ( *this == laser::GREEN ) return "green";
+	if ( *this == laser::BLUE ) return "blue";
+	if ( *this == laser::MAGENTA ) return "magenta";
+	if ( *this == laser::CYAN ) return "cyan";
+	if ( *this == laser::WHITE ) return "white";
+	DF_LOG( "laser::Color::getColorName(): A problem has occurred. This laser's color does not correspond to a df::Color." );
+	return "INVALID COLOR";
 }

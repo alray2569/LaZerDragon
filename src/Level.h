@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <map>
 #include <Object.h>
 #include <ObjectList.h>
 #include "Component.h"
@@ -13,6 +14,9 @@ private:
 	int active;
 	bool isLevelOver;
   std::string level_string;
+  std::string title;
+  // counts is an map of component types to their counts
+  std::map<std::string, int> counts;
 
 public:
 	Level( int levelnum );
@@ -32,6 +36,14 @@ public:
   std::string getLevelString( void ) const;
 
   void start( void );
+
+  void setTitle( std::string );
+  std::string getTitle( void ) const;
+
+  void setCount( std::string, int );
+  int getCount( std::string );
+
+  void draw( void );
 };
 
 #endif

@@ -36,7 +36,8 @@ void LevelManager::shutDown() {
 
 int LevelManager::loadLevel(std::string filename, int level_num) {
   static std::regex level_regex("^[A-Zafjnrvwxyz ]*$");
-  std::string level_string, line;
+  std::string level_string, line, title;
+  int mirror_count, lens_count, prism_count;
 
   std::ifstream level_file(filename);
 
@@ -46,6 +47,16 @@ int LevelManager::loadLevel(std::string filename, int level_num) {
     return -1;
   }
 
+  // Get level title
+  std::getline(level_file, title);
+  // Get component counts
+  level_file >> mirror_count >> lens_count >> prism_count;
+  if (level_file.fail()) {
+    DF_LOG("LevelManager::loadLevel(): Invalid header format");
+  }
+  level_file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  // Get level layout
   int row = 0;
   while( !level_file.eof() ) {
     std::getline(level_file, line);
@@ -82,6 +93,11 @@ int LevelManager::loadLevel(std::string filename, int level_num) {
 
   Level* new_level = new Level(level_num);
   new_level->setLevelString(level_string);
+  new_level->setTitle(title);
+
+  new_level->setCount("mirror", mirror_count);
+  new_level->setCount("lens", lens_count);
+  new_level->setCount("prism", prism_count);
 
   level_arr[level_num] = new_level;
   level_file.close();

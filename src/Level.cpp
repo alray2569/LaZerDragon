@@ -1,14 +1,17 @@
 #include "Level.h"
 #include <WorldManager.h>
 #include <EventStep.h>
+#include <EventView.h>
 #include <Position.h>
 #include <GameManager.h>
+#include <GraphicsManager.h>
 #include "EventReceiverActive.h"
 #include "ldutil.h"
 
 Level::Level( int levelnum ) {
 	this->levelnum = levelnum;
 	this->components = df::ObjectList( );
+	this->setAltitude(4);
 	this->setSolidness( df::SPECTRAL );
 	this->receivers = 0;
 	this->active = 0;
@@ -16,6 +19,10 @@ Level::Level( int levelnum ) {
 	this->registerInterest( RECEIVER_ACTIVE_EVENT );
 	this->isLevelOver = false;
 	setLevelString("");
+	setTitle("");
+	setCount("mirror", 0);
+	setCount("lens", 0);
+	setCount("prism", 0);
 }
 
 int Level::addComponent( Component *comp ) {
@@ -94,4 +101,30 @@ void Level::start() {
       }
     }
   }
+  df::WorldManager &world_manager = df::WorldManager::getInstance();
+  df::EventView mirrorEvt("mirror", counts["mirror"], false);
+  world_manager.onEvent(&mirrorEvt);
+  df::EventView lensEvt("lens", counts["lens"], false);
+  world_manager.onEvent(&lensEvt);
+  df::EventView prismEvt("prism", counts["prism"], false);
+  world_manager.onEvent(&prismEvt);
+}
+
+void Level::setTitle( std::string title ) {
+  this->title = title;
+}
+std::string Level::getTitle( void ) const {
+  return this->title;
+}
+
+void Level::setCount(std::string type, int count) {
+  this->counts[type] = count;
+}
+int Level::getCount(std::string type) {
+  return counts[type];
+}
+
+void Level::draw( void ) {
+  df::GraphicsManager::getInstance().drawString( gridToPos(df::Position(0,0)),
+      title, df::LEFT_JUSTIFIED, df::CYAN);
 }

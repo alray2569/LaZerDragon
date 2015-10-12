@@ -23,6 +23,7 @@
 #include "Prism.h"
 #include "Receiver.h"
 #include "ldutil.h"
+#include "TitleScreen.h"
 
 #define DEBUG true
 
@@ -55,16 +56,7 @@ int main() {
     df::splash();
   }
 
-
-  ComponentCount* mirror_count = new ComponentCount("mirror", 0);
-  ComponentCount* lens_count = new ComponentCount("lens", 0);
-  ComponentCount* prism_count = new ComponentCount("prism", 0);
-  mirror_count->setLocation(df::BOTTOM_LEFT);
-  lens_count->setLocation(df::BOTTOM_CENTER);
-  prism_count->setLocation(df::BOTTOM_RIGHT);
-  mirror_count->setSelected();
-
-  level_manager.startLevel(0);
+  new TitleScreen;
 
   game_manager.run();
 

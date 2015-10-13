@@ -7,6 +7,7 @@
 
 // Engine includes
 #include "EventMouse.h"
+#include "ResourceManager.h"
 #include "WorldManager.h"
 
 // Game includes
@@ -80,6 +81,7 @@ void ComponentCount::leftClick(df::Position pos) {
       }
     }
     setSelected(true);
+    df::ResourceManager::getInstance().getSound("click")->play();
     return; // Prevent typical left click actions
   }
 
@@ -99,6 +101,7 @@ void ComponentCount::leftClick(df::Position pos) {
       // If the component is of this type, rotate it
       if (comp->getType() == getComponentType()) {
         comp->rotate();
+        df::ResourceManager::getInstance().getSound("woosh")->play();
       }
     }
   }
@@ -108,6 +111,7 @@ void ComponentCount::leftClick(df::Position pos) {
     // Try to place a component
     if (placeComponent(grid_pos)) {
       // If successful, decrement the number of components left
+      df::ResourceManager::getInstance().getSound("click")->play();
       setValue(getValue() - 1);
     }
   }
@@ -127,6 +131,7 @@ void ComponentCount::rightClick(df::Position pos) {
     if (comp && comp->getType() == getComponentType()) {
       LevelManager::getInstance().getActiveLevel()->removeComponent(comp);
       world_manager.markForDelete(comp);
+      df::ResourceManager::getInstance().getSound("click")->play();
       setValue(getValue() + 1);
     }
   }

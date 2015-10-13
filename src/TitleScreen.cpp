@@ -33,6 +33,9 @@ int TitleScreen::eventHandler( const df::Event *evt ) {
 				// Start the first level
 				LevelManager::getInstance( ).startLevel( 0 );
 
+				// Play the click sound
+				df::ResourceManager::getInstance().getSound("click")->play();
+
 				// Delete this object
 				df::WorldManager::getInstance( ).markForDelete( this );
 				return 1;

@@ -1,9 +1,9 @@
-Prisms split laser beams, and lenses combine them.
-0 1 1
-BBBBBBaBBBBBBBBBBBGBBBBBBB
-B          BB            B
-B          BB            B
-y          jE            z
-B          BB            B
-B          BB            B
-BBBBBBfBBBBBBBBBBBJBBBBBBB
+Level I
+6 0 0
+BBBBBBBBBBBBBBBBBBBBBBBBBB
+B     B                  B
+E     B           B      B
+B     B    BBBBjBBB      B
+B                 B      B
+M                 B      B
+BBBBBBBBBBBBBBBBBBBBBaBBBB

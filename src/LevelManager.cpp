@@ -107,7 +107,6 @@ int LevelManager::loadLevel(std::string filename, int level_num) {
 
 int LevelManager::unloadLevel(int level_num) {
   df::WorldManager::getInstance().markForDelete(level_arr[level_num]);
-  level_arr[level_num] = NULL;
   return 0;
 }
 

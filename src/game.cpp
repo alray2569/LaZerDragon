@@ -58,7 +58,10 @@ int main() {
 
   new TitleScreen;
 
+  df::Music* bkgd_music = df::ResourceManager::getInstance().getMusic("music");
+  bkgd_music->play();
   game_manager.run();
+  bkgd_music->stop();
 
   level_manager.shutDown();
   game_manager.shutDown();
@@ -87,6 +90,8 @@ int loadResources() {
   resource_manager.loadSound( "sounds/woosh.ogg", "woosh");
   resource_manager.loadSound( "sounds/yellow.ogg", "yellow");
 
+  DF_LOG("loadResources(): The game will try to load levels until a level "
+      "fails to load");
   bool success = true;
   for (int i = 0; success; i++) {
     std::ostringstream oss;

@@ -89,6 +89,7 @@ int loadResources() {
   resource_manager.loadSound( "sounds/white.ogg", "white");
   resource_manager.loadSound( "sounds/woosh.ogg", "woosh");
   resource_manager.loadSound( "sounds/yellow.ogg", "yellow");
+  resource_manager.loadSound( "sounds/tada.ogg", "tada" );
 
   DF_LOG("loadResources(): The game will try to load levels until a level "
       "fails to load");

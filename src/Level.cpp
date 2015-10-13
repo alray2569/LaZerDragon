@@ -5,6 +5,7 @@
 #include <Position.h>
 #include <GameManager.h>
 #include <GraphicsManager.h>
+#include <ResourceManager.h>
 #include "EventReceiverActive.h"
 #include "ldutil.h"
 #include "LevelManager.h"
@@ -58,6 +59,9 @@ int Level::getLevelNum( void ) const {
 
 void Level::setLevelOver( void ) {
 	df::WorldManager &world_manager = df::WorldManager::getInstance();
+
+	// Play TaDa
+	df::ResourceManager::getInstance( ).getSound( "tada" )->play( false );
 
 	// Remove components
 	df::ObjectListIterator oli( &this->components );

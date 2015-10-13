@@ -87,12 +87,11 @@ int loadResources() {
   resource_manager.loadSound( "sounds/woosh.ogg", "woosh");
   resource_manager.loadSound( "sounds/yellow.ogg", "yellow");
 
-  for (int i = 0; i < NUM_LEVELS; i++) {
+  bool success = true;
+  for (int i = 0; success; i++) {
     std::ostringstream oss;
     oss << "levels/level" << i << ".lvl";
-    if (level_manager.loadLevel( oss.str() , i)) {
-      return -1;
-    }
+    success = !level_manager.loadLevel(oss.str() , i);
   }
 
   return 0;

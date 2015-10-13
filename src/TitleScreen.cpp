@@ -37,8 +37,8 @@ int TitleScreen::eventHandler( const df::Event *evt ) {
 				// Play the click sound
 				df::ResourceManager::getInstance().getSound("click")->play();
 
-				// Delete this object
-				df::WorldManager::getInstance( ).markForDelete( this );
+				// Disable this object
+				this->setActive( false );
 				return 1;
 			}
 			else if ( mevt->getMouseButton( ) == df::Mouse::RIGHT ) {

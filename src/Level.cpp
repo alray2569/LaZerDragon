@@ -30,9 +30,8 @@ Level::Level( int levelnum ) {
 
 int Level::addComponent( Component *comp ) {
 	df::ObjectListIterator oli( &this->components );
-
+	df::Position pos = comp->getPosition( );
 	for ( oli.first( ); !oli.isDone( ); oli.next( ) ) {
-		df::Position pos = comp->getPosition( );
 		if ( oli.currentObject( )->getPosition( ) == pos ) {
 			return -1;
 		}
@@ -59,6 +58,7 @@ int Level::getLevelNum( void ) const {
 
 void Level::setLevelOver( void ) {
 	df::WorldManager &world_manager = df::WorldManager::getInstance();
+	df::SceneGraph scene_graph = world_manager.getSceneGraph();
 
 	// Play TaDa
 	df::ResourceManager::getInstance( ).getSound( "tada" )->play( false );
@@ -68,9 +68,10 @@ void Level::setLevelOver( void ) {
 	for ( oli.first( ); !oli.isDone( ); oli.next( ) ) {
 		world_manager.markForDelete( oli.currentObject( ) );
 	}
+	this->components.clear();
 
 	// Remove lasers
-	df::ObjectList lasers = world_manager.getSceneGraph().visibleObjects(2);
+	df::ObjectList lasers = scene_graph.visibleObjects(2);
 	df::ObjectListIterator laser_iter( &lasers );
 	for ( laser_iter.first(); !laser_iter.isDone(); laser_iter.next() ) {
 		world_manager.markForDelete( laser_iter.currentObject() );
@@ -79,8 +80,26 @@ void Level::setLevelOver( void ) {
 	this->isLevelOver = true;
 	this->setActive( false );
 
+	// If the next level fails to start, then there are no more levels!
+	// Return to the title screen.
 	if (LevelManager::getInstance( ).startLevel( -1 )) {
-		df::GameManager::getInstance( ).setGameOver();
+		df::ObjectList view_objects = scene_graph.visibleObjects(4);
+		df::ObjectListIterator view_iter( &view_objects );
+		for ( view_iter.first(); !view_iter.isDone(); view_iter.next()) {
+			df::Object* temp_obj = view_iter.currentObject();
+			if (temp_obj->getType() == "ComponentCount") {
+				world_manager.markForDelete( temp_obj );
+			}
+		}
+
+		df::ObjectList inactive_objects = scene_graph.inactiveObjects();
+		df::ObjectListIterator inactive_iter( &inactive_objects );
+		for (inactive_iter.first(); !inactive_iter.isDone(); inactive_iter.next()) {
+			df::Object* temp_obj = inactive_iter.currentObject();
+			if (temp_obj->getType() == "titleScn") {
+				temp_obj->setActive();
+			}
+		}
 	}
 }
 
@@ -113,6 +132,13 @@ std::string Level::getLevelString( void ) const {
 }
 
 void Level::start() {
+  // Reset level parameters in case level has been played previously
+  this->setActive( true );
+  this->isLevelOver = false;
+  this->receivers = 0;
+  this->active = 0;
+
+  // Fill map with static components
   for (int y = 0; y < GRID_HEIGHT; y++) {
     for (int x = 0; x < GRID_WIDTH; x++) {
       char c = level_string[x + y * GRID_WIDTH];
@@ -123,6 +149,8 @@ void Level::start() {
       }
     }
   }
+
+  // Populate component count objects
   df::WorldManager &world_manager = df::WorldManager::getInstance();
   df::EventView mirrorEvt("mirror", counts["mirror"], false);
   world_manager.onEvent(&mirrorEvt);
@@ -130,8 +158,6 @@ void Level::start() {
   world_manager.onEvent(&lensEvt);
   df::EventView prismEvt("prism", counts["prism"], false);
   world_manager.onEvent(&prismEvt);
-
-  this->setActive( true );
 }
 
 void Level::setTitle( std::string title ) {

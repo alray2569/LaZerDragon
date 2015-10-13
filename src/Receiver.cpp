@@ -4,6 +4,7 @@
 #include <EventStep.h>
 #include <GraphicsManager.h>
 #include <ResourceManager.h>
+#include "LevelManager.h"
 
 Receiver::Receiver( laser::Color color /* = laser::WHITE */ ) {
 	this->color = color;
@@ -44,7 +45,7 @@ ReceiverState Receiver::getState( void ) const {
 void Receiver::laserHit( Laser *laserPtr ) {
   if (laserPtr->getColor() == this->color) {
     this->setState(ACTIVE);
-    df::Event evt = EventReceiverActive( this );
+    df::Event evt = EventReceiverActive( this, LevelManager::getInstance( ).getActiveLevel( )->getLevelNum( ) );
     df::WorldManager::getInstance( ).onEvent( &evt );
   }
   df::WorldManager::getInstance( ).markForDelete( laserPtr );

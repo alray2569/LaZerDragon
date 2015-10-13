@@ -12,7 +12,8 @@ TitleScreen::TitleScreen( ) {
 	this->setSolidness( df::SPECTRAL );
 	this->setSprite( df::ResourceManager::getInstance( ).getSprite( "titlescreen" ) );
 	this->setSpriteSlowdown( 30 );
-	this->setPosition( df::Position( df::WorldManager::getInstance( ).getBoundary( ).getHorizontal( ) / 2, df::WorldManager::getInstance( ).getBoundary( ).getVertical( ) / 2 ) );
+	df::WorldManager &wm = df::WorldManager::getInstance( );
+	this->setPosition( df::Position( wm.getBoundary( ).getHorizontal( ) / 2, wm.getBoundary( ).getVertical( ) / 2 ) );
 }
 
 int TitleScreen::eventHandler( const df::Event *evt ) {

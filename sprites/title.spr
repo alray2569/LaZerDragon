@@ -1,6 +1,6 @@
 frames 2
 width 51
-height 17
+height 19
 color cyan
       ______________________________               
      /   / ___  /     /   ___/  ___ \  Game by     
@@ -9,7 +9,7 @@ color cyan
   /   / /  / /  /  /  /___   __  |     Music by    
  /   /_/__/_/  /  /______/  /  | |     Kevin McLeod
 /__________/  /_______/____/___|_|___________      
-    /  ___   /  _____/  ___  / ____  / ___  /      
+    /  ___   /  ______/ ___  / ____  / ___  /      
    /  /  /  /  / __  / /  / / /   / / /  / /       
   /  /__/  /  / /_/ / /__/ / /___/ / /  / /        
   \_______/__/___/_/____  /_______/_/  /_/         
@@ -17,6 +17,8 @@ color cyan
                                                    
     Left click to place and rotate components.     
         Right click to delete components.          
+ Select different components to place by clicking  
+      on the component counts at the bottom.       
                                                    
     Left click to start, right click to quit.      
 end
@@ -27,7 +29,7 @@ end
   /   / /  / /  /  /  /___   __  |     Music by    
  /   /_/__/_/  /  /______/  /  | |     Kevin McLeod
 /__________/  /_______/____/___|_|___________      
-    /  ___   /  _____/  ___  / ____  / ___  /      
+    /  ___   /  ______/ ___  / ____  / ___  /      
    /  /  /  /  / __  / /  / / /   / / /  / /       
   /  /__/  /  / /_/ / /__/ / /___/ / /  / /        
   \_______/__/___/_/____  /_______/_/  /_/         
@@ -35,6 +37,8 @@ end
                                                    
     Left click to place and rotate components.     
         Right click to delete components.          
+ Select different components to place by clicking  
+      on the component counts at the bottom.       
                                                    
                                                    
 end
